@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Add guest</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex flex-wrap mb-4">
+        <h1 class="flex-grow-1">Add Guest</h1>
+        <div>
+            <a th:href="@{/guest}" class="btn btn-secondary">Go back</a>
+        </div>
+    </div>
+    <form th:action="@{/guest/add}" th:object="${guest}" method="post">
+        <div class="mb-3">
+            <label>CIN</label>
+            <input type="text" class="form-control" th:field="*{cin}">
+        </div>
+        <div class="mb-3">
+            <label>First name</label>
+            <input type="text" class="form-control" th:field="*{firstName}" placeholder="First name">
+        </div>
+        <div class="mb-3">
+            <label>Last name</label>
+            <input type="text" class="form-control" th:field="*{lastName}" placeholder="Last name">
+        </div>
+        <label>Wedding</label>
+        <select  th:field="*{weddings}" class="form-select" name="permission" multiple>
+            <option th:each="wedding : ${weddingChoiceList}"
+
+                    th:value="${wedding.num}"
+                    th:text="${wedding.date}+${' '}+${wedding.room}" />
+        </select>
+        <label>Status</label>
+        <select name="status" class="form-select">
+            <option th:each="statusOpt: ${T(com.example.springpartymanagement.entity.GuestStatus).values()}"
+                    th:value="${statusOpt}" th:text="${statusOpt}"></option>
+        </select>
+        <input type="submit" value="Save" class="btn btn-primary mt-4">
+    </form>
+
+</div>
+</body>
+</html>

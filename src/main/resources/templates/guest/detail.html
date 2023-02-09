@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Detail guest</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="d-flex flex-wrap mb-4">
+        <h1 class="flex-grow-1">Detail Guest</h1>
+        <div>
+            <a th:href="@{/guest}" class="btn btn-secondary">Go back</a>
+        </div>
+    </div>
+    <form th:object="${guest}">
+        <div class="mb-3">
+            <label>CIN</label>
+            <input type="text" class="form-control" th:field="*{cin}" disabled>
+        </div>
+        <div class="mb-3">
+            <label>First name</label>
+            <input type="text" class="form-control" th:field="*{firstName}" disabled>
+        </div>
+        <div class="mb-3">
+            <label>Last name</label>
+            <input type="text" class="form-control" th:field="*{lastName}" disabled>
+        </div>
+        <div class="mb-3">
+            <label>Status</label>
+            <input type="text" class="form-control" th:field="*{status}" disabled>
+        </div>
+        <label>Wedding</label>
+        <select  th:field="*{weddings}" class="form-select" name="permission" multiple disabled>
+            <option th:each="wedding : ${guest.weddings}"
+
+                    th:value="${wedding.num}"
+                    th:text="${wedding.date}+${' '}+${wedding.room}" />
+        </select>
+
+    </form>
+
+
+</div>
+</body>
+</html>
