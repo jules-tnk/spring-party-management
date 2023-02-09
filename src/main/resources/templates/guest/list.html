@@ -12,7 +12,7 @@
     <div class="d-flex flex-wrap mb-4">
         <h1 class="flex-grow-1">Guest list</h1>
         <div>
-            <a th:href="@{/guest/add}" class="btn btn-primary ms-2">Create new</a>
+            <a sec:authorize="hasRole('ADMIN')" th:href="@{/guest/add}" class="btn btn-primary ms-2">Create new</a>
         </div>
     </div>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -48,12 +48,13 @@
                 <td th:text="${guest.getStatus}" />
                 <td>
                     <div class="float-end text-nowrap">
-                        <a sec:authorize="hasRole('ADMIN')" th:href="@{/guest/edit/{id}(id=${guest.cin})}" class="btn btn-sm btn-primary">
-                            Edit
-                        <a>
-                        <a th:href="@{/guest/{id}(id=${guest.cin})}" class="btn btn-sm btn-secondary">
-                            Detail
-                        <a>
+                        <a sec:authorize="hasRole('ADMIN')"
+                           th:href="@{/guest/edit/{id}(id=${guest.cin})}"
+                           th:text="Edit" class="btn btn-sm btn-primary"/>
+                        <a th:href="@{/guest/{id}(id=${guest.cin})}"
+                           th:text="Detail"
+                           class="btn btn-sm btn-secondary"/>
+
                         <form   sec:authorize="hasRole('ADMIN')"
                                 th:action="@{/guest/delete/{id}(id=${guest.cin})}"
                                method="post" class="js-submit-confirm d-inline">

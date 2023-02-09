@@ -40,7 +40,7 @@ public class DomainDataInitializer implements ApplicationListener<ContextRefresh
                         "cin859",
                         "Aze",
                         "Las",
-                        GuestStatus.GROOM
+                        GuestStatus.GROOM_GUEST
                 )
         );
 
@@ -49,7 +49,7 @@ public class DomainDataInitializer implements ApplicationListener<ContextRefresh
                         "cin9856",
                         "Uol" ,
                         "Pfu",
-                        GuestStatus.BRIDE
+                        GuestStatus.BRIDE_GUEST
                 )
         );
 
