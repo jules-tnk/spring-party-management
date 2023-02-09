@@ -26,6 +26,16 @@ public class GuestController implements GenericController<Guest, String> {
         return "guest/list";
     }
 
+    @GetMapping("/search")
+    public String getListBySearchKeyWord(Model model, @RequestParam(value = "keyword", required = false) String keyword){
+        if (keyword == null || keyword.isEmpty()){
+            return "redirect:/guest";
+        }
+        model.addAttribute("guests", guestRepository.findAllByFirstNameContainsOrLastNameContainsIgnoreCase(keyword, keyword));
+        model.addAttribute("keyword", keyword);
+        return "guest/list";
+    }
+
     @Override
     @GetMapping("/{id}")
     public String getDetail(Model model, @PathVariable("id") String s) {
