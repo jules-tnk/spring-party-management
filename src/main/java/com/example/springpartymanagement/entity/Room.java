@@ -1,6 +1,6 @@
 package com.example.springpartymanagement.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.*;
 
 import java.util.LinkedHashSet;
