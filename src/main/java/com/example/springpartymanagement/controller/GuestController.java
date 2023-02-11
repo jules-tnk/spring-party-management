@@ -46,7 +46,7 @@ public class GuestController implements GenericController<Guest, String> {
 
     @Override
     @GetMapping("/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String add(Model model) {
         model.addAttribute("guest", new Guest());
         model.addAttribute("weddingChoiceList", weddingRepository.findAll());
@@ -55,7 +55,7 @@ public class GuestController implements GenericController<Guest, String> {
 
     @Override
     @PostMapping("/add")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String add(@ModelAttribute("guest") Guest guest) {
         guestRepository.save(guest);
         return "redirect:/guest";
@@ -63,7 +63,7 @@ public class GuestController implements GenericController<Guest, String> {
 
     @Override
     @GetMapping("/edit/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String edit(Model model, @PathVariable("id") String s) {
         model.addAttribute("guest", guestRepository.findById(s).get());
         model.addAttribute("weddingChoiceList", weddingRepository.findAll());
@@ -72,7 +72,7 @@ public class GuestController implements GenericController<Guest, String> {
 
     @Override
     @PostMapping("/edit/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String edit(@PathVariable("id") String s, Guest guest) {
         guestRepository.save(guest);
         return null;
@@ -80,7 +80,7 @@ public class GuestController implements GenericController<Guest, String> {
 
     @Override
     @PostMapping("/delete/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public String delete(@PathVariable("id") String s) {
         guestRepository.deleteById(s);
         return "redirect:/guest";

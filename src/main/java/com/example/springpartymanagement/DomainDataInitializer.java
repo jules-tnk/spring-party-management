@@ -1,14 +1,10 @@
 package com.example.springpartymanagement;
 
-import com.example.springpartymanagement.entity.Guest;
-import com.example.springpartymanagement.entity.GuestStatus;
-import com.example.springpartymanagement.entity.Room;
-import com.example.springpartymanagement.entity.Wedding;
-import com.example.springpartymanagement.repository.GuestRepository;
-import com.example.springpartymanagement.repository.RoomRepository;
-import com.example.springpartymanagement.repository.WeddingRepository;
+import com.example.springpartymanagement.entity.*;
+import com.example.springpartymanagement.repository.*;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,13 +17,21 @@ public class DomainDataInitializer implements ApplicationListener<ContextRefresh
     private final GuestRepository guestRepository;
     private final WeddingRepository weddingRepository;
     private final RoomRepository roomRepository;
+    private final AppUserRepository appUserRepository;
+    private final UserRoleRepository userRoleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public DomainDataInitializer(GuestRepository guestRepository,
                                  WeddingRepository weddingRepository,
-                                 RoomRepository roomRepository) {
+                                 RoomRepository roomRepository,
+                                 AppUserRepository appUserRepository,
+                                 UserRoleRepository userRoleRepository, PasswordEncoder passwordEncoder) {
         this.guestRepository = guestRepository;
         this.weddingRepository = weddingRepository;
         this.roomRepository = roomRepository;
+        this.appUserRepository = appUserRepository;
+        this.userRoleRepository = userRoleRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -81,7 +85,34 @@ public class DomainDataInitializer implements ApplicationListener<ContextRefresh
         weddingRepository.save(wedding1);
         weddingRepository.save(wedding2);
 
-        alreadySetup = false;
+        UserRole roleUSER = new UserRole("USER");
+        UserRole roleADMIN = new UserRole("ADMIN");
+
+        userRoleRepository.save(roleUSER);
+        userRoleRepository.save(roleADMIN);
+
+        for (int i = 0; i < 3; i++) {
+            appUserRepository.save(
+                    new AppUser(
+                            "user" + i,
+                            passwordEncoder.encode("user" + i),
+                            roleUSER
+                    )
+            );
+        }
+
+        for (int i = 0; i < 3; i++) {
+            appUserRepository.save(
+                    new AppUser(
+                            "admin" + i,
+                            passwordEncoder.encode("admin" + i),
+                            roleADMIN
+                    )
+            );
+        }
+
+
+        alreadySetup = true;
     }
 
 }
